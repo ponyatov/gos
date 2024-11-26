@@ -1,0 +1,21 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/inc/**",
+                "${workspaceFolder}/tmp/**",
+                "${workspaceFolder}/src/**"
+            ],
+            "forcedInclude": [
+            ],
+            "defines": [
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerPath": "/usr/bin/g++"
+        }
+    ]
+}

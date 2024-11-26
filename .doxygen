@@ -1,0 +1,19 @@
+PROJECT_NAME           = "gos"
+PROJECT_BRIEF          = "Guest Operating System"
+PROJECT_LOGO           = doc/logo.png
+HTML_OUTPUT            = html
+OUTPUT_DIRECTORY       = doc
+INPUT                  = README.md inc src doc
+INCLUDE_PATH           = inc
+EXCLUDE                = ref/* *.pdf *.djvu
+WARN_IF_UNDOCUMENTED   = NO
+RECURSIVE              = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+GENERATE_LATEX         = NO
+FILE_PATTERNS         += *.lex *.yacc
+EXTENSION_MAPPING      = lex=C++ yacc=C++ ino=C++
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+LAYOUT_FILE            = doc/DoxygenLayout.xml
+SORT_GROUP_NAMES       = YES
+REPEAT_BRIEF           = YES
