@@ -13,6 +13,7 @@ endif
 # dirs
 CWD   = $(CURDIR)
 BIN   = $(CWD)/bin
+DOC   = $(CWD)/doc
 LIB   = $(CWD)/lib
 INC   = $(CWD)/inc
 SRC   = $(CWD)/src
@@ -75,6 +76,10 @@ $(TMP)/%.parser.cpp: $(SRC)/%.yacc
 .PHONY: doxy
 doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png
 	rm -rf doc/html ; doxygen $< 1>/dev/null
+
+DOCS += $(DOC)/Cpp/modern-cmake.pdf
+$(DOC)/Cpp/modern-cmake.pdf:
+	$(CURL) $@ https://cliutils.gitlab.io/modern-cmake/modern-cmake.pdf
 
 .PHONY: doc
 doc: $(DOCS)

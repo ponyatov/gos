@@ -83,4 +83,5 @@
             "env": { "MSYSTEM": "UCRT64", "CHERE_INVOKING": "1" }
         }
     },
+    "cmake.cmakePath": "C:\\msys64\\usr\\bin\\cmake"
 }
