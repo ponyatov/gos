@@ -30,8 +30,8 @@
         // ARM
         "dan-c-underwood.arm",
         // CortexM
-        // "marus25.cortex-debug",     // overengineered, does not load .elf
-        "webfreak.debug",              // ok
+        "marus25.cortex-debug",     // overengineered, does not load .elf
+        // "webfreak.debug",              // ok
         "mcu-debug.peripheral-viewer",
         "mcu-debug.memory-view",
         // "mcu-debug.rtos-views",
