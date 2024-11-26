@@ -72,3 +72,8 @@ doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png
 
 .PHONY: doc
 doc: $(DOCS)
+
+ifeq (Msys,$(shell uname -o))
+update: apt.Msys
+	pacman -S `cat $<`
+endif
