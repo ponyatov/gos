@@ -17,6 +17,11 @@
             "name": "linux",
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
+        },
+        {
+            "name": "mingw32",
+            "inherits": "common",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-w64-mingw32.cmake"
         }
     ]
 }
