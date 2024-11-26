@@ -32,15 +32,15 @@ C += $(wildcard $(SRC)/*.c*)
 H += $(wildcard $(INC)/*.h*)
 G += $(wildcard $(LIB)/*.ini) $(wildcard $(LIB)/*.g)
 
-OBJ += $(patsubst $(SRC)/%.c*,$(TMP)/%.o,$(C))
+OBJ += $(patsubst $(SRC)/%.cpp,$(TMP)/%.o,$(C))
 
 CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
 HP += $(TMP)/$(MODULE).parser.hpp
 
-OBJ += $(patsubst $(TMP)/%.c*,$(TMP)/%.o,$(CP))
+OBJ += $(patsubst $(TMP)/%.cpp,$(TMP)/%.o,$(CP))
 
 # cfg
-CFLAGS += -Iinc -Itmp -O0 -g3
+CFLAGS += -I$(INC) -I$(TMP) -O0 -g3
 XFLAGS += $(CFLAGS) -std=gnu++17
 
 .PHONY: all run
@@ -56,11 +56,13 @@ tmp/format_cpp: $(C) $(H)
 # rule
 $(BIN)/$(MODULE): $(OBJ)
 	$(CXX) $(XFLAGS) -o $@ $^
-$(TMP)/%.o: src/%.cpp
+$(TMP)/%.o: $(SRC)/%.cpp $(H) $(HP)
 	$(CXX) $(XFLAGS) -o $@ -c $<
-$(TMP)/%.lexer.cpp: src/%.lex
+$(TMP)/%.o: $(TMP)/%.cpp $(H) $(HP)
+	$(CXX) $(XFLAGS) -o $@ -c $<
+$(TMP)/%.lexer.cpp: $(SRC)/%.lex
 	flex -o $@ $<
-$(TMP)/%.parser.cpp: src/%.yacc
+$(TMP)/%.parser.cpp: $(SRC)/%.yacc
 	bison -o $@ $<	
 
 # doc

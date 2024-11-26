@@ -1,0 +1,44 @@
+{
+    "recommendations": [
+        "stkb.rewrap",
+        "ryuta46.multi-command",
+        "tabnine.tabnine-vscode",
+        "ms-vscode.makefile-tools",
+        // Linux
+        // "ms-vscode-remote.remote-ssh",
+        // "coolbear.systemd-unit-file",
+        // "github.vscode-github-actions",
+        // "redhat.vscode-yaml",
+        // formatters
+        "xaver.clang-format",
+        "foxundermoon.shell-format",
+        // misc
+        "usernamehw.errorlens",
+        // "hbenl.vscode-test-explorer",
+        // C++
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        // parser
+        "daohong-emilio.yash",
+        "rreverser.ragel",
+        // embedded
+        "zixuanwang.linkerscript",
+        "trond-snekvik.gnu-mapfiles",
+        "ms-vscode.hexeditor",
+        // ARM
+        "dan-c-underwood.arm",
+        // CortexM
+        // "marus25.cortex-debug",     // overengineered, does not load .elf
+        "webfreak.debug",              // ok
+        "mcu-debug.peripheral-viewer",
+        "mcu-debug.memory-view",
+        // "mcu-debug.rtos-views",
+        // ESP32
+        // "espressif.esp-idf-extension",
+        // Rust
+        // "rust-lang.rust-analyzer",
+        // "tamasfe.even-better-toml",
+    ]
+}

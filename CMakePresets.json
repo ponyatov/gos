@@ -9,12 +9,12 @@
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin/${presetName}",
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CFLAGS": "-I${sourceDir}/inc -I${sourceDir}/tmp",
-                "DEVFLAGS": "-O0 -g3"
+                "CFLAGS": "-I${sourceDir}/inc -I${sourceDir}/${presetName}/inc -I${sourceDir}/tmp",
+                "DEBUG": "-O0 -g3"
             }
         },
         {
-            "name": "Linux",
+            "name": "linux",
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
         }
