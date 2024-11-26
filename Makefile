@@ -32,22 +32,36 @@ C += $(wildcard $(SRC)/*.c*)
 H += $(wildcard $(INC)/*.h*)
 G += $(wildcard $(LIB)/*.ini) $(wildcard $(LIB)/*.g)
 
+OBJ += $(patsubst $(SRC)/%.c*,$(TMP)/%.o,$(C))
+
 CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
 HP += $(TMP)/$(MODULE).parser.hpp
+
+OBJ += $(patsubst $(TMP)/%.c*,$(TMP)/%.o,$(CP))
 
 # cfg
 CFLAGS += -Iinc -Itmp -O0 -g3
 XFLAGS += $(CFLAGS) -std=gnu++17
 
 .PHONY: all run
-all: bin/$(MODULE) $(G)
-run: bin/$(MODULE) $(G)
+all: $(BIN)/$(MODULE) $(G)
+run: $(BIN)/$(MODULE) $(G)
 	$^
 
 .PHONY: format
 format: tmp/format_cpp
 tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
+
+# rule
+$(BIN)/$(MODULE): $(OBJ)
+	$(CXX) $(XFLAGS) -o $@ $^
+$(TMP)/%.o: src/%.cpp
+	$(CXX) $(XFLAGS) -o $@ -c $<
+$(TMP)/%.lexer.cpp: src/%.lex
+	flex -o $@ $<
+$(TMP)/%.parser.cpp: src/%.yacc
+	bison -o $@ $<	
 
 # doc
 .PHONY: doxy
