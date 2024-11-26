@@ -4,6 +4,12 @@ REL    = $(shell git rev-parse --short=4    HEAD)
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 NOW    = $(shell date +%d%m%y)
 
+ifeq (Msys,$(shell uname -o))
+OS ?= Msys
+else
+OS ?= $(shell lsb_release -si)
+endif
+
 # dirs
 CWD   = $(CURDIR)
 BIN   = $(CWD)/bin
@@ -73,7 +79,19 @@ doxy: .doxygen doc/DoxygenLayout.xml doc/logo.png
 .PHONY: doc
 doc: $(DOCS)
 
-ifeq (Msys,$(shell uname -o))
-update: apt.Msys
-	pacman -S `cat $<`
-endif
+# install
+.PHONY: install update
+install: install_$(OS)
+update: update_$(OS)
+
+.PHONY: install_Debian update_Debian
+install_Debian:
+update_Debian: apt.Debian
+	sudo apt update
+	sudo apt install -uy `cat apt.Debian`
+
+.PHONY: install_Msys update_Msys
+install_Msys:
+	pacman -Suy
+update_Msys: apt.Msys
+	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `
