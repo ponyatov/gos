@@ -1,0 +1,22 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "common",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/tmp/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin/${presetName}",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CFLAGS": "-I${sourceDir}/inc -I${sourceDir}/tmp",
+                "DEVFLAGS": "-O0 -g3"
+            }
+        },
+        {
+            "name": "Linux",
+            "inherits": "common",
+            "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
+        }
+    ]
+}
