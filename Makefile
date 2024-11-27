@@ -91,6 +91,7 @@ update: update_$(OS)
 
 .PHONY: install_Debian update_Debian
 install_Debian:
+	$(MAKE) update
 update_Debian: apt.Debian
 	sudo apt update
 	sudo apt install -uy `cat apt.Debian`
@@ -98,5 +99,6 @@ update_Debian: apt.Debian
 .PHONY: install_Msys update_Msys
 install_Msys:
 	pacman -Syuu
+	$(MAKE) update
 update_Msys: apt.Msys
 	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `

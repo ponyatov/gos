@@ -2,7 +2,7 @@
     #include "parser.hpp"
 %}
 
-%defines
+%defines %union { char c; }
 
 %%
 
