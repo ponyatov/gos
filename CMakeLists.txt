@@ -10,19 +10,23 @@ set(TMP ${CWD}/tmp)
 
 file(GLOB_RECURSE A
     "${SRC}/*.s*"
+    "${SRC}/${OS}/*.s*"
 )
 file(GLOB_RECURSE C
     "${SRC}/*.c*"
+    "${SRC}/${OS}/*.c*"
 )
 file(GLOB_RECURSE H
     "${INC}/*.h*"
+    "${SRC}/${OS}/*.h*"
 )
 
 include_directories(
-    ${INC} ${TMP}
+    ${INC} ${INC}/${OS} ${TMP}
 )
 
 add_compile_definitions(
+    "OS=${OS}"
 )
 
 find_package(FLEX  REQUIRED)
@@ -38,7 +42,9 @@ BISON_TARGET(yacc ${Y} ${TMP}/${yacc}.parser.cpp
 
 add_executable(${CMAKE_PROJECT_NAME}
     ${C} ${H} ${A}
-    # ${FLEX_lex_OUTPUTS} ${BISON_yacc_OUTPUTS}
+    ${FLEX_lex_OUTPUTS} ${BISON_yacc_OUTPUTS}
 )
 
 target_link_libraries(${PROJECT_NAME})
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)

@@ -8,7 +8,11 @@
             "generator": "Unix Makefiles",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin/${presetName}",
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_FLAGS": "-g3 -O0",
+                "CMAKE_CXX_FLAGS": "-g3 -O0",
+                "CMAKE_VERBOSE_MAKEFILE": "YES",
+                "OS": "${presetName}"
             }
         },
         {
@@ -17,7 +21,7 @@
             "toolchainFile": "${sourceDir}/cmake/x86_64-linux-gnu.cmake"
         },
         {
-            "name": "mingw64",
+            "name": "msys",
             "inherits": "common",
             "toolchainFile": "${sourceDir}/cmake/x86_64-w64-mingw64.cmake"
         }

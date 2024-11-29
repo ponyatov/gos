@@ -62,8 +62,12 @@ tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 
 # rule
-$(BIN)/$(MODULE): $(OBJ)
-	$(CXX) $(XFLAGS) -o $@ $^
+$(BIN)/$(MODULE): $(C) $(H) $(CP) $(HP)
+	cmake -S$(CWD)  -B$(CWD)/$(OS) &&\
+	cmake --build   -B$(CWD)/$(OS) &&\
+	cmake --install -B$(CWD)/$(OS) &&\ ls -la $@
+# $(BIN)/$(MODULE): $(OBJ)
+# 	$(CXX) $(XFLAGS) -o $@ $^
 $(TMP)/%.o: $(SRC)/%.cpp $(H) $(HP)
 	$(CXX) $(XFLAGS) -o $@ -c $<
 $(TMP)/%.o: $(TMP)/%.cpp $(H) $(HP)
