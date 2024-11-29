@@ -95,20 +95,23 @@ $(DOC)/Cpp/modern-cmake.pdf:
 doc: $(DOCS)
 
 # install
-.PHONY: install update
+.PHONY: install update ref gz
 install: install_$(OS)
 update: update_$(OS)
 
-.PHONY: install_Debian update_Debian
-install_Debian:
+.PHONY: install_linux update_linux
+install_linux:
 	$(MAKE) update
-update_Debian: apt.Debian
+update_linux: apt.linux
 	sudo apt update
-	sudo apt install -uy `cat apt.Debian`
+	sudo apt install -uy `cat apt.linux`
 
-.PHONY: install_Msys update_Msys
-install_Msys:
+.PHONY: install_msys update_msys
+install_msys:
 	pacman -Syuu
 	$(MAKE) update
-update_Msys: apt.Msys
+update_msys: apt.msys
 	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `
+
+ref: $(REF)
+gz:  $(GZ)
