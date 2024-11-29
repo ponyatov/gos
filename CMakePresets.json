@@ -8,9 +8,7 @@
             "generator": "Unix Makefiles",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/bin/${presetName}",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CFLAGS": "-I${sourceDir}/inc -I${sourceDir}/${presetName}/inc -I${sourceDir}/tmp",
-                "DEBUG": "-O0 -g3"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {

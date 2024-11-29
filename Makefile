@@ -5,9 +5,10 @@ BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 NOW    = $(shell date +%d%m%y)
 
 ifeq (Msys,$(shell uname -o))
-OS  = Msys
+	OS = msys
 else
-OS ?= $(shell lsb_release -si)
+	OS = $(shell uname -s | tr A-Z a-z )
+# OS = $(shell lsb_release -si)
 endif
 
 # dirs
@@ -35,8 +36,8 @@ define gitref
 endef
 
 # src
-C += $(wildcard $(SRC)/*.c*)
-H += $(wildcard $(INC)/*.h*)
+C += $(wildcard $(SRC)/*.c*) $(wildcard $(SRC)/$(OS)/*.c*)
+H += $(wildcard $(INC)/*.h*) $(wildcard $(INC)/$(OS)/*.h*)
 G += $(wildcard $(LIB)/*.ini) $(wildcard $(LIB)/*.g)
 
 OBJ += $(patsubst $(SRC)/%.cpp,$(TMP)/%.o,$(C))
