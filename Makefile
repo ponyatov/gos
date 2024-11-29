@@ -53,8 +53,11 @@ XFLAGS += $(CFLAGS) -std=gnu++17
 
 .PHONY: all run
 all: $(BIN)/$(MODULE) $(G)
-run: $(BIN)/$(MODULE) $(G)
-	$^
+# run: $(BIN)/$(MODULE) $(G)
+# 	$^
+run: $(BIN)/$(OS)/bin/$(MODULE) $(G)
+	rm -rf $(BIN)/$(OS) ;\
+	$(MAKE) $<
 
 .PHONY: format
 format: tmp/format_cpp
@@ -62,10 +65,13 @@ tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 
 # rule
-$(BIN)/$(OS)/bin/$(MODULE): $(C) $(H) $(CP) $(HP)
-	cmake -B$(CWD)/$(OS) --preset=$(OS) &&\
-	cmake -B$(CWD)/$(OS) &&\
+$(BIN)/$(OS)/bin/$(MODULE): $(TMP)/$(OS)/CMakeCache.txt
+	cmake --build   $(TMP)/$(OS) &&\
+	cmake --install $(TMP)/$(OS) &&\
 	ls -la $@
+$(TMP)/$(OS)/CMakeCache.txt: $(C) $(H) $(CP) $(HP) Makefile CMake*
+	cmake --preset=$(OS)
+
 $(BIN)/$(MODULE): $(OBJ)
 	$(CXX) $(XFLAGS) -o $@ $^
 $(TMP)/%.o: $(SRC)/%.cpp $(H) $(HP)
