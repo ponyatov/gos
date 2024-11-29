@@ -7,13 +7,19 @@ GUI::GUI(std::string title, int x, int y, int w, int h) : Object(title) {
     assert(
         renderer = SDL_CreateRenderer(
             window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+    assert(surface = SDL_GetWindowSurface(window));
+    paint();
+}
+
+void GUI::paint(void) {
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x22, 0x22, 0x22));
+    SDL_UpdateWindowSurface(window);
 }
 
 GUI::~GUI() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    fprintf(stderr, "sdl quit\n");
 }
 
 bool GUI::loop(void) {
