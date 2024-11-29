@@ -56,8 +56,7 @@ all: $(BIN)/$(MODULE) $(G)
 # run: $(BIN)/$(MODULE) $(G)
 # 	$^
 run: $(BIN)/$(OS)/bin/$(MODULE) $(G)
-	rm -rf $(BIN)/$(OS) ;\
-	$(MAKE) $<
+	$^
 
 .PHONY: format
 format: tmp/format_cpp
@@ -65,12 +64,11 @@ tmp/format_cpp: $(C) $(H)
 	$(CF) $? && touch $@
 
 # rule
-$(BIN)/$(OS)/bin/$(MODULE): $(TMP)/$(OS)/CMakeCache.txt
+$(BIN)/$(OS)/bin/$(MODULE): $(C) $(H) $(CP) $(HP) CMake*
+	cmake --preset=$(OS)         &&\
 	cmake --build   $(TMP)/$(OS) &&\
 	cmake --install $(TMP)/$(OS) &&\
-	ls -la $@
-$(TMP)/$(OS)/CMakeCache.txt: $(C) $(H) $(CP) $(HP) Makefile CMake*
-	cmake --preset=$(OS)
+	ls -la $@ && touch $@
 
 $(BIN)/$(MODULE): $(OBJ)
 	$(CXX) $(XFLAGS) -o $@ $^
