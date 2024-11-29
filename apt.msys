@@ -1,6 +1,4 @@
 git make curl
 cmake
-mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb
 flex bison libreadline-devel
 clang
-mingw-w64-x86_64-cmake mingw-w64-x86_64-make

@@ -68,6 +68,8 @@
     "cmake.sourceDirectory"  : "${workspaceFolder}",
     "cmake.buildDirectory"   : "${workspaceFolder}/tmp/${workspaceFolderBasename}",
     "cmake.generator"        : "Unix Makefiles",
+    "cmake.debugConfig": {
+        "args": [ "${workspaceFolder}/lib/${workspaceFolderBasename}.ini" ] },
 
     // Python
     "autopep8.path": ["${workspaceFolder}/bin/autopep8", "autopep8"],
