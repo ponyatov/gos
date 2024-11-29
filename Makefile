@@ -108,7 +108,7 @@ update_linux: apt.linux
 
 .PHONY: install_msys update_msys
 install_msys:
-	pacman -Syuu
+	pacman -Suy
 	$(MAKE) update
 update_msys: apt.msys
 	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `
