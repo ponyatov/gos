@@ -1,0 +1,3 @@
+git make curl
+code meld doxygen clang-format
+cmake g++ flex bison libreadline-dev
