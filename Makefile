@@ -49,7 +49,7 @@ OBJ += $(patsubst $(TMP)/%.cpp,$(TMP)/%.o,$(CP))
 
 # cfg
 CFLAGS += -I$(INC) -I$(TMP) -O0 -g3
-XFLAGS += $(CFLAGS) -std=gnu++17
+CXXFLAGS += $(CFLAGS) -std=gnu++17
 
 .PHONY: all run
 all: $(BIN)/$(MODULE) $(G)
@@ -71,11 +71,11 @@ $(BIN)/$(OS)/bin/$(MODULE): $(C) $(H) $(CP) $(HP) CMake*
 	ls -la $@ && touch $@
 
 $(BIN)/$(MODULE): $(OBJ)
-	$(CXX) $(XFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 $(TMP)/%.o: $(SRC)/%.cpp $(H) $(HP)
-	$(CXX) $(XFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 $(TMP)/%.o: $(TMP)/%.cpp $(H) $(HP)
-	$(CXX) $(XFLAGS) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
 $(TMP)/%.lexer.cpp: $(SRC)/%.lex
 	flex -o $@ $<
 $(TMP)/%.parser.cpp: $(SRC)/%.yacc
