@@ -36,26 +36,35 @@ define gitref
 endef
 
 # src
-C += $(wildcard $(SRC)/*.c*) $(wildcard $(SRC)/$(OS)/*.c*)
-H += $(wildcard $(INC)/*.h*) $(wildcard $(INC)/$(OS)/*.h*)
+C += $(wildcard $(SRC)/*.c*)
+H += $(wildcard $(INC)/*.h*)
+C += $(wildcard $(SRC)/$(OS)/*.c*)
+H += $(wildcard $(INC)/$(OS)/*.h*)
 C += $(wildcard $(SRC)/gui/*.c*)
-H += $(wildcard $(SRC)/gui/*.h*)
+H += $(wildcard $(INC)/gui/*.h*)
 G += $(wildcard $(LIB)/*.ini) $(wildcard $(LIB)/*.g)
 
-OBJ += $(patsubst $(SRC)/%.cpp,$(TMP)/%.o,$(C))
+OBJ = $(patsubst $(SRC)/%.cpp,$(TMP)/%.o,$(C))
+OBJ := $(subst tmp/linux/,tmp/,$(OBJ))
+OBJ := $(subst tmp/gui/,tmp/,$(OBJ))
 
 CP += $(TMP)/$(MODULE).parser.cpp $(TMP)/$(MODULE).lexer.cpp
 HP += $(TMP)/$(MODULE).parser.hpp
 
 OBJ += $(patsubst $(TMP)/%.cpp,$(TMP)/%.o,$(CP))
 
+# libs
+L += $(shell pkg-config --libs sdl2)
+
 # cfg
-   FLAGS += -I$(INC) -I$(TMP) -O0 -g3
+   FLAGS += -I$(INC) -I$(INC)/$(OS) -I$(INC)/gui -I$(TMP) -O0 -g3
+   FLAGS += $(shell pkg-config --cflags sdl2)
   CFLAGS += $(FLAGS) -std=gnu11
 CXXFLAGS += $(FLAGS) -std=gnu++17
 
 .PHONY: all run
 all: $(BIN)/$(MODULE) $(G)
+	$^
 # run: $(BIN)/$(MODULE) $(G)
 # 	$^
 run: $(BIN)/$(OS)/bin/$(MODULE) $(G)
@@ -74,8 +83,12 @@ $(BIN)/$(OS)/bin/$(MODULE): $(C) $(H) $(CP) $(HP) CMake*
 	ls -la $@ && touch $@
 
 $(BIN)/$(MODULE): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(L)
 $(TMP)/%.o: $(SRC)/%.cpp $(H) $(HP)
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
+$(TMP)/%.o: $(SRC)/$(OS)/%.cpp $(H) $(HP)
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
+$(TMP)/%.o: $(SRC)/gui/%.cpp $(H) $(HP)
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 $(TMP)/%.o: $(TMP)/%.cpp $(H) $(HP)
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
