@@ -47,4 +47,4 @@ add_executable(${CMAKE_PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME})
 
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(TARGETS ${PROJECT_NAME})
