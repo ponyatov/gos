@@ -48,8 +48,9 @@ HP += $(TMP)/$(MODULE).parser.hpp
 OBJ += $(patsubst $(TMP)/%.cpp,$(TMP)/%.o,$(CP))
 
 # cfg
-CFLAGS += -I$(INC) -I$(TMP) -O0 -g3
-CXXFLAGS += $(CFLAGS) -std=gnu++17
+   FLAGS += -I$(INC) -I$(TMP) -O0 -g3
+  CFLAGS += $(FLAGS) -std=gnu11
+CXXFLAGS += $(FLAGS) -std=gnu++17
 
 .PHONY: all run
 all: $(BIN)/$(MODULE) $(G)
