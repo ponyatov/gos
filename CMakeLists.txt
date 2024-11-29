@@ -15,14 +15,16 @@ file(GLOB_RECURSE A
 file(GLOB_RECURSE C
     "${SRC}/*.c*"
     "${SRC}/${OS}/*.c*"
+    "${SRC}/gui/*.c*"
 )
 file(GLOB_RECURSE H
     "${INC}/*.h*"
     "${SRC}/${OS}/*.h*"
+    "${SRC}/gui/*.h*"
 )
 
 include_directories(
-    ${INC} ${INC}/${OS} ${TMP}
+    ${INC} ${INC}/${OS} ${INC}/gui ${TMP}
 )
 
 add_compile_definitions(
@@ -40,11 +42,15 @@ get_filename_component(yacc ${Y} NAME_WE)
 BISON_TARGET(yacc ${Y} ${TMP}/${yacc}.parser.cpp
           DEFINES_FILE ${TMP}/${yacc}.parser.hpp)
 
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+
 add_executable(${CMAKE_PROJECT_NAME}
     ${C} ${H} ${A}
     ${FLEX_lex_OUTPUTS} ${BISON_yacc_OUTPUTS}
 )
 
-target_link_libraries(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} SDL2::SDL2)
 
 install(TARGETS ${PROJECT_NAME})

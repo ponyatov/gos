@@ -38,6 +38,8 @@ endef
 # src
 C += $(wildcard $(SRC)/*.c*) $(wildcard $(SRC)/$(OS)/*.c*)
 H += $(wildcard $(INC)/*.h*) $(wildcard $(INC)/$(OS)/*.h*)
+C += $(wildcard $(SRC)/gui/*.c*)
+H += $(wildcard $(SRC)/gui/*.h*)
 G += $(wildcard $(LIB)/*.ini) $(wildcard $(LIB)/*.g)
 
 OBJ += $(patsubst $(SRC)/%.cpp,$(TMP)/%.o,$(C))
