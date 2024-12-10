@@ -112,7 +112,6 @@ DOCS += $(DOC)/Cpp/modern-cmake.pdf
 $(DOC)/Cpp/modern-cmake.pdf:
 	$(CURL) $@ https://cliutils.gitlab.io/modern-cmake/modern-cmake.pdf
 
-# doc
 .PHONY: doc
 doc: $(DOCS)
 
@@ -121,8 +120,8 @@ doc: $(DOCS)
 install: doc ref gz
 	$(MAKE) update
 update: update_$(OS)
-ref: $(REF)
-gz:  $(GZ)
+ref:    $(REF)
+gz:     $(GZ)
 
 update_Debian:
 	sudo apt update
