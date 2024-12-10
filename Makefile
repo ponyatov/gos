@@ -1,25 +1,29 @@
+# cross
+TARGET ?= linux-x86_64
+# linux-x86_64
+# win32-i686
+
 # var
 MODULE = $(notdir $(CURDIR))
 REL    = $(shell git rev-parse --short=4    HEAD)
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 NOW    = $(shell date +%d%m%y)
 
-ifeq (Msys,$(shell uname -o))
-	OS = msys
+ifeq ($(OS),Windows_NT)
+	OS = MinGW
 else
-	OS = $(shell uname -s | tr A-Z a-z )
-# OS = $(shell lsb_release -si)
+	OS = $(shell lsb_release -si)
 endif
 
 # dirs
-CWD   = $(CURDIR)
-BIN   = $(CWD)/bin
-DOC   = $(CWD)/doc
-LIB   = $(CWD)/lib
-INC   = $(CWD)/inc
-SRC   = $(CWD)/src
-REF   = $(CWD)/ref
-TMP   = $(CWD)/tmp
+CWD = $(CURDIR)
+BIN = $(CWD)/bin
+DOC = $(CWD)/doc
+LIB = $(CWD)/lib
+INC = $(CWD)/inc
+SRC = $(CWD)/src
+REF = $(CWD)/ref
+TMP = $(CWD)/tmp
 
 # tool
 CURL   = curl -L -o
@@ -62,6 +66,7 @@ L += $(shell pkg-config --libs sdl2)
   CFLAGS += $(FLAGS) -std=gnu11
 CXXFLAGS += $(FLAGS) -std=gnu++17
 
+# all
 .PHONY: all run
 all: $(BIN)/$(MODULE) $(G)
 	$^
@@ -70,6 +75,7 @@ all: $(BIN)/$(MODULE) $(G)
 run: $(BIN)/$(OS)/bin/$(MODULE) $(G)
 	$^
 
+# format
 .PHONY: format
 format: tmp/format_cpp
 tmp/format_cpp: $(C) $(H)
@@ -106,27 +112,21 @@ DOCS += $(DOC)/Cpp/modern-cmake.pdf
 $(DOC)/Cpp/modern-cmake.pdf:
 	$(CURL) $@ https://cliutils.gitlab.io/modern-cmake/modern-cmake.pdf
 
+# doc
 .PHONY: doc
 doc: $(DOCS)
 
 # install
-.PHONY: install update ref gz
-install: install_$(OS)
+.PHONY: install update update_$(OS) ref gz
+install: doc ref gz
+	$(MAKE) update
 update: update_$(OS)
-
-.PHONY: install_linux update_linux
-install_linux:
-	$(MAKE) update
-update_linux: apt.linux
-	sudo apt update
-	sudo apt install -uy `cat apt.linux`
-
-.PHONY: install_msys update_msys
-install_msys:
-	pacman -Suy
-	$(MAKE) update
-update_msys: apt.msys
-	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `
-
 ref: $(REF)
 gz:  $(GZ)
+
+update_Debian:
+	sudo apt update
+	sudo apt install -uy `cat apt.Debian`
+update_MinGW:
+	pacman -Suy
+	pacman -S `cat $< | tr '[ \t\r\n]+' ' ' `
